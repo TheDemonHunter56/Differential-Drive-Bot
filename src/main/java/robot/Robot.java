@@ -28,15 +28,14 @@ import robot.Ports.OI;
  */
 public class Robot extends CommandRobot implements Logged {
   // INPUT DEVICES
-  private final CommandXboxController operator = new CommandXboxController(OI.OPERATOR);
   private final CommandXboxController driver = new CommandXboxController(OI.DRIVER);
 
   private final PowerDistribution pdh = new PowerDistribution();
 
   // SUBSYSTEMS
-
+  Drive drive = new Drive();
   // COMMANDS
-
+  
   /** The robot contains subsystems, OI devices, and commands. */
   public Robot() {
     super(PERIOD.in(Seconds));
@@ -70,7 +69,9 @@ public class Robot extends CommandRobot implements Logged {
   }
 
   /** Configures trigger -> command bindings. */
-  private void configureBindings() {}
+  private void configureBindings() {
+    drive.setDefaultCommand(drive.drive(driver::getLeftY, driver::getRightY));
+  }
 
   /**
    * Command factory to make both controllers rumble.
